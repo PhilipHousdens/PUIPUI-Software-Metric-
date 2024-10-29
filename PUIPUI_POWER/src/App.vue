@@ -7,9 +7,9 @@
     <header class="">
       <!-- Banner -->
      <div class="bg-logo-cream" >
-      <div class="flex justify-center items-center">
-        <img class="ml-5 w-20 rounded-full text-center" src="./assets/PUIPUI.png" alt="logo">
-      </div>
+        <div class="flex justify-center items-center">
+          <img class="ml-5 w-20 rounded-full text-center" src="./assets/PUIPUI.png" alt="logo">
+        </div>
      </div>
     </header>
     <main>

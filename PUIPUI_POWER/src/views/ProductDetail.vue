@@ -52,19 +52,6 @@ function addToBag() {
         <p class="text-2xl font-semibold text-green-600 mt-2">${{ product.price }}</p>
         <p class="text-gray-600 mt-2 mb-4">{{ product.description }}</p>
         
-        <!-- Size Selection -->
-        <div class="size-selection my-4">
-          <label for="size" class="text-lg font-medium">Size:</label>
-          <select id="size" v-model="selectedSize" class="mt-1 block w-full border border-gray-300 rounded-md p-3 bg-white shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option v-for="size in product.sizes" :key="size" :value="size">{{ size }}</option>
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-            <option value="XXL">XXL</option>
-          </select>
-        </div>
-
         <!-- Quantity Selection -->
         <div class="number-selection my-4 flex items-center">
           <label for="quantity" class="text-lg font-medium mr-2">Quantity:</label>
