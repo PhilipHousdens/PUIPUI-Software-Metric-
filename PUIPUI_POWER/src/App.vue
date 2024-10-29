@@ -13,9 +13,6 @@
      </div>
     </header>
     <main>
-      <div>
-        <img class="w-full" src="./assets/Home/Banner_Puipui.jpg" alt="">
-      </div>
     </main>
     <RouterView />
   </div>

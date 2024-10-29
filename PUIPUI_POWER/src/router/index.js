@@ -11,9 +11,10 @@ const router = createRouter({
       component: ProductView
     },
     {
-      path: '/ProductDetail/1',
+      path: '/ProductDetail/:id',
       name: 'productDetail',
-      component: ProductDetail
+      component: ProductDetail,
+      props: true
     }
   ]
 })

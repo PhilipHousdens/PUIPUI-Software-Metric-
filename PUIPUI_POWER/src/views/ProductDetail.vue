@@ -1,42 +1,23 @@
 <script setup lang="ts">
-import axiosInstance from '@/service/axiosIntance';
-import { Ref, onMounted , ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import type { Product } from '@/types'; 
-import ProductService from '@/service/axiosIntance'
+import ProductService from '@/service/axiosIntance';
+import router from '@/router';
 
-const id : Ref<number> = ref(1)
+const product = ref<Product>();
+const id = router.currentRoute.value.params.id;
 
-    ProductService.getProductById(id.value)
+onMounted(() => {
+  ProductService.getProductById(id)
     .then((response) => {
-      products.value = response.data[0].products;
+      product.value = response.data;
     }).catch((error) => {
-      console.error("KUY", error);
-    })
-
-const products = ref<Product[]>(null)
-
-const product = ref({
-  name: '',
-  price: 0,
-  pics: [],
-  sizes: [],
+      console.error("Error fetching product:", error);
+    });
 });
 
 const selectedSize = ref('');
-const selectedAlphabet = ref('');
 const quantity = ref(1);
-const details = ref('');
-
-
-async function fetchProduct() {
-  try {
-    const response = await axiosInstance.getProduct();
-    product.value = response.data[0]; // Adjust based on actual API response structure
-    selectedSize.value = product.value.sizes[0]; // Set default size if available
-  } catch (error) {
-    console.error("Error fetching product:", error);
-  }
-}
 
 function increaseQuantity() {
   quantity.value++;
@@ -55,63 +36,61 @@ function buyNow() {
 function addToBag() {
   alert(`Added ${quantity.value} of ${product.value.name} to bag`);
 }
-
-onMounted(() => {
-  fetchProduct();
-});
 </script>
 
 <template>
-    <div v-if="product" class="product-page py-10 max-w-4xl mx-auto">
-      <div class="flex">
-       
-        <!-- Product Details -->
-        <div class="flex-grow ml-6">
-          <h1 class="text-3xl font-bold text-gray-800">{{ product.name }}</h1>
-          <p class="text-xl font-semibold text-green-600 mt-2">{{ product.price }}</p>
-         <!-- Size Selection -->
-<div class="size-selection my-4">
-  <label for="size" class="text-sm font-medium">Size:</label>
-  <select id="size" v-model="selectedSize" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-    <option v-for="size in product.sizes" :key="size" :value="size">{{ size }}</option>
-    <!-- Add predefined sizes if needed -->
-    <option value="S">S</option>
-    <option value="M">M</option>
-    <option value="L">L</option>
-    <option value="XL">XL</option>
-    <option value="XXL">XXL</option>
-  </select>
-</div>
+  <div v-if="product" class="product-page py-10 max-w-5xl mx-auto">
+    <div class="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
+      <!-- Product Image -->
+      <div class="flex-none w-full md:w-1/3">
+        <img :src="product.imgUrl" alt="Product Image" class="w-full h-auto object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none transition-transform duration-300 transform hover:scale-105"/>
+      </div>
 
-          
-          <!-- Quantity Selection -->
-          <div class="number-selection my-4 flex items-center">
-            <label for="quantity" class="text-sm font-medium mr-2">Quantity:</label>
-            <button @click="decreaseQuantity" class="bg-gray-300 px-3 py-1 rounded">-</button>
-            <input
-              id="quantity"
-              type="number"
-              v-model="quantity"
-              min="1"
-              class="mx-2 w-16 text-center border border-gray-300 rounded-md"
-            />
-            <button @click="increaseQuantity" class="bg-gray-300 px-3 py-1 rounded">+</button>
-          </div>
-          <!-- Detail/Material Textarea -->
-          <textarea
-            class="mt-4 w-full border border-gray-300 rounded-md p-2"
-            placeholder="Detail/Material"
-            v-model="details"
-          ></textarea>
-          <!-- Action Buttons -->
-          <div class="action-buttons mt-6 flex space-x-4">
-            <button @click="buyNow" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Buy Now</button>
-            <button @click="addToBag" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Add to Bag</button>
-          </div>
-          {{ product.name }}
+      <!-- Product Details -->
+      <div class="flex-grow p-6">
+        <h1 class="text-4xl font-bold text-gray-800">{{ product.name }}</h1>
+        <p class="text-2xl font-semibold text-green-600 mt-2">${{ product.price }}</p>
+        <p class="text-gray-600 mt-2 mb-4">{{ product.description }}</p>
+        
+        <!-- Size Selection -->
+        <div class="size-selection my-4">
+          <label for="size" class="text-lg font-medium">Size:</label>
+          <select id="size" v-model="selectedSize" class="mt-1 block w-full border border-gray-300 rounded-md p-3 bg-white shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option v-for="size in product.sizes" :key="size" :value="size">{{ size }}</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+          </select>
+        </div>
 
+        <!-- Quantity Selection -->
+        <div class="number-selection my-4 flex items-center">
+          <label for="quantity" class="text-lg font-medium mr-2">Quantity:</label>
+          <button @click="decreaseQuantity" class="bg-gray-300 px-3 py-1 rounded-lg transition-colors duration-200 hover:bg-gray-400">-</button>
+          <input
+            id="quantity"
+            type="number"
+            v-model="quantity"
+            min="1"
+            class="mx-2 w-16 text-center border border-gray-300 rounded-md shadow-md"
+          />
+          <button @click="increaseQuantity" class="bg-gray-300 px-3 py-1 rounded-lg transition-colors duration-200 hover:bg-gray-400">+</button>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons mt-6 flex space-x-4">
+          <button @click="buyNow" class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg transition-transform duration-200 transform hover:scale-105 hover:bg-blue-600">Buy Now</button>
+          <button @click="addToBag" class="bg-green-500 text-white px-6 py-2 rounded-lg shadow-lg transition-transform duration-200 transform hover:scale-105 hover:bg-green-600">Add to Bag</button>
         </div>
       </div>
     </div>
-  </template>
-  
+  </div>
+</template>
+
+<style scoped>
+.product-page {
+  background-color: #f3f4f6; /* Light gray background for contrast */
+}
+</style>

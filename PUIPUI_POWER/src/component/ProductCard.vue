@@ -9,6 +9,7 @@ defineProps<{
 </script>
 
 <template>
+  <RouterLink :to="{name: 'productDetail',params:{id: product._id}}" >
      <div class="grid grid-cols-2 gap-6 px-10">
       <div class="border p-4 rounded-lg shadow-md">
         <img :src="product.imgUrl" alt="Product image" class="w-full h-40 object-cover rounded"/>
@@ -19,4 +20,5 @@ defineProps<{
         </div>
       </div>
     </div>
+    </RouterLink>
 </template>

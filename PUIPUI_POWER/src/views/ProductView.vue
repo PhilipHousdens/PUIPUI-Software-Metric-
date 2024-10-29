@@ -18,6 +18,9 @@ onMounted(() => {
 
 <template>
   <div class="py-10">
+    <div>
+<img class="w-full" src="../assets/Home/Banner_Puipui.jpg" alt="">
+</div>
     <!-- Product Grid (2x2 layout) -->
     <ProductCard v-for="product in products" :key="product.id" :product="product" />
   </div>
