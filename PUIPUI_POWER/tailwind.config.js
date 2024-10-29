@@ -2,11 +2,14 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "logo-cream": "rgba(244,240,237,1)", // Changed 255 to 1 for proper RGBA format
+      },
+    },
   },
   plugins: [],
 }
-
