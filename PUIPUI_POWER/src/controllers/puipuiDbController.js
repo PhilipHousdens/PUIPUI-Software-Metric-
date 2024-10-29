@@ -1,28 +1,35 @@
-// puipuiDbController.js
-import { puipuiDB } from "../api/database/db.js"; // Ensure puipuiDB is an initialized collection
+import { puipuiDB } from "../api/database/db.js"; 
 
-// Get all puipui products
-async function getPuiPui() {
+
+async function getPuiPui(page = 1) {
+    const limit = 4; 
+    const skip = (page - 1) * limit; 
+
     try {
-        const allPuiPui = await puipuiDB.find().toArray();
+        const allPuiPui = await puipuiDB.find().skip(skip).limit(limit).toArray(); 
+        const totalProducts = await puipuiDB.countDocuments(); 
+        
         console.log("Retrieved data:", allPuiPui); 
-        return allPuiPui; // Return the array directly
+        return {
+            products: allPuiPui,
+            totalPages: Math.ceil(totalProducts / limit), 
+        }; 
     } catch (error) {
-        return { error: error.message }; // Return error as a plain object
+        return { error: error.message }; 
     }
 }
 
 async function getPuiPuiById(productId) {
     try {
         const product = await puipuiDB.findOne({ 
-            "products._id": parseInt(productId) // Use dot notation to search within the products array
+            "products._id": parseInt(productId)
         },
         {
-            projection: { "products.$": 1 } // Use projection to retrieve only the matching product
+            projection: { "products.$": 1 } 
         });
 
         if (product && product.products.length > 0) {
-            return product.products[0]; // Return the matched product
+            return product.products[0]; 
         } else {
             return { error: "Product not found" };
         }
@@ -33,4 +40,3 @@ async function getPuiPuiById(productId) {
 }
 
 export { getPuiPui, getPuiPuiById };
-

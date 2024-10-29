@@ -14,17 +14,19 @@ app.use(oakCors({
   credentials: true, // Allow credentials if needed
 }));
 
-// Define routes
+// server.js
 router.get("/api/data", async (ctx) => {
-    const data = await getPuiPui(); // Fetch data from the controller
+    const data = await getPuiPui(); // Fetch data without pagination parameters
     if (data.error) {
         ctx.response.status = 500; // Set the response status to 500 if there's an error
         ctx.response.body = { error: data.error }; // Return the error
     } else {
-        ctx.response.body = data; // Set the response body directly
+        ctx.response.body = data.products; // Set the response body to just the products array
         ctx.response.type = "application/json"; // Set content type to JSON
     }
 });
+
+
 
 router.get("/api/product/:id", async (ctx) => {
   const productId = ctx.params.id;
