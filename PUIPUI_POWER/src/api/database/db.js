@@ -1,8 +1,8 @@
 import { MongoClient } from "mongodb";
 
 // Make sure to URL encode your password if it contains special characters
-const MONGODB_URI = "mongodb+srv://AdiminPog:zAWDsDBulHYT7ISN@puipuipower.lfwkn.mongodb.net/puipuiDB?retryWrites=true&w=majority&appName=puipuiPower";
-const DB_NAME = "puipuiDB";
+const MONGODB_URI = Deno.env.get("MONGODB_URI");
+const DB_NAME = Deno.env.get("DB_NAME");
 
 const client = new MongoClient(MONGODB_URI);
 
