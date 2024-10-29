@@ -17,12 +17,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="py-10">
+  <div class="pb-10 ">
+    <div>
+      <img class="w-full" src="../assets/Home/Banner_Puipui.jpg" alt="">
+    </div>
     <!-- Product Grid (2x2 layout) -->
-    <ProductCard v-for="product in products" :key="product.id" :product="product" />
+    <div class="flex flex-col justify-center items-center">
+      <div class="grid grid-cols-3 gap-8">
+        <ProductCard v-for="product in products" :key="product._id" :product="product" />
+      </div>
+    </div>
   </div>
 </template>
-
-<style scoped>
-/* Custom styling */
-</style>
