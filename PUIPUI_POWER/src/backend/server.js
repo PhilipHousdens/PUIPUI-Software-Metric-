@@ -1,7 +1,7 @@
 // server.js
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
-import { getPuiPui } from "../controllers/puipuiDbController.js";
+import { getPuiPui, getPuiPuiById } from "../controllers/puipuiDbController.js";
 
 const app = new Application();
 const router = new Router();
@@ -25,6 +25,18 @@ router.get("/api/data", async (ctx) => {
         ctx.response.type = "application/json"; // Set content type to JSON
     }
 });
+
+router.get("/api/product/:id", async (ctx) => {
+  const productId = ctx.params.id;
+  const product = await getPuiPuiById(productId);
+  if(product && !productId.error) {
+    ctx.response.body = product;
+    ctx.response.type = "application/json";
+  } else {
+    ctx.response.status = 404;
+    ctx.response.body = {error: "Product not found"}
+  }
+})
 
 app.use(router.routes());
 app.use(router.allowedMethods());
