@@ -100,7 +100,7 @@ function prevPage() {
     <div class="flex justify-center mt-6 space-x-4">
       <button
         @click="prevPage"
-        :disabled="currentPage === 1"
+        :disabled="currentPage === currentPage + 1"
         class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
       >
         &lt;
