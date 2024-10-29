@@ -1,9 +1,18 @@
 // server.js
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import { getPuiPui } from "../controllers/puipuiDbController.js";
 
 const app = new Application();
 const router = new Router();
+
+
+// Enable CORS for all routes
+app.use(oakCors({
+  origin: "http://localhost:5173", // Allow requests from your Vue app
+  methods: ["GET", "POST", "PUT", "DELETE"], // Specify the allowed methods
+  credentials: true, // Allow credentials if needed
+}));
 
 // Define routes
 router.get("/api/data", async (ctx) => {
