@@ -100,7 +100,7 @@ function prevPage() {
     <div class="flex justify-center mt-6 space-x-4">
       <button
         @click="prevPage"
-        :disabled="currentPage.value === 1"
+        :disabled="currentPage === 1"
         class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
       >
         &lt;
@@ -108,7 +108,7 @@ function prevPage() {
       <span>Page {{ currentPage }} of {{ totalPages }}</span>
       <button
         @click="nextPage"
-        :disabled="currentPage.value === totalPages.value"
+        :disabled="currentPage === totalPages"
         class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
       >
         &gt;
