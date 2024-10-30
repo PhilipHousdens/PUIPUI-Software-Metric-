@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ProductView from '../views/ProductView.vue'
 import ProductDetail from '@/views/ProductDetail.vue'
+import ShoppingBag from '@/views/ShoppingBag.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +16,11 @@ const router = createRouter({
       name: 'productDetail',
       component: ProductDetail,
       props: true
+    },
+    {
+      path: '/shopping-bag',
+      name: 'shoppingBag',
+      component: ShoppingBag
     }
   ]
 })
