@@ -15,6 +15,7 @@ app.use(oakCors({
 }));
 
 // server.js
+// Fetch Product by limit and page 
 router.get("/api/data/:limit/:page", async (ctx) => {
   console.log("Limit:", ctx.params.limit); // Log the limit
   console.log("Page:", ctx.params.page);   // Log the page
@@ -45,7 +46,7 @@ router.get("/api/data/:limit/:page", async (ctx) => {
 
 
 
-
+// Product Id 
 router.get("/api/product/:id", async (ctx) => {
   const productId = ctx.params.id;
   const product = await getPuiPuiById(productId);

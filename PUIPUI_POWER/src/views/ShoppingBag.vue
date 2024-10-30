@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import ShoppingBagItem from '@/component/ShoppingBagItem.vue';
 import { useToast } from 'vue-toastification';
 
+const emit = defineEmits(['updateCartCount']); // Define the emit
 const toast = useToast();
 const cartItems = ref([]);
 
@@ -22,13 +23,12 @@ const updateQuantity = (itemId, newQuantity) => {
   try {
     const item = cartItems.value.find(item => item.id === itemId);
     if (item) {
-      if (newQuantity > 0 && newQuantity <= 10) { 
-        item.quantity = newQuantity;
-        saveCartItems();
-        toast.success('Quantity updated');
-      } else {
-        toast.warning('Quantity must be between 1 and 10');
-      }
+      // Emit event to update the cart count
+      const quantityChange = newQuantity - item.quantity;
+      emit('updateCartCount', quantityChange);
+      item.quantity = newQuantity; // Update quantity
+      saveCartItems(); // Save updated cart to localStorage
+      toast.success('Quantity updated');
     }
   } catch (error) {
     console.error('Error updating quantity:', error);
@@ -38,6 +38,10 @@ const updateQuantity = (itemId, newQuantity) => {
 
 const removeItem = (itemId) => {
   try {
+    const item = cartItems.value.find(item => item.id === itemId);
+    if (item) {
+      emit('updateCartCount', -item.quantity); // Emit an event to update the cart count
+    }
     cartItems.value = cartItems.value.filter(item => item.id !== itemId);
     saveCartItems();
     toast.success('Item removed from cart');

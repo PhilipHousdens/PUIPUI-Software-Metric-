@@ -1,3 +1,23 @@
+<script setup>
+  defineProps({
+    item: {
+      type: Object,
+      required: true
+    }
+  });
+  
+  const emit = defineEmits(['updateQuantity', 'removeItem']);
+  
+  const updateQuantity = (itemId, newQuantity) => {
+    emit('updateQuantity', itemId, newQuantity);
+  };
+  
+  const removeItem = (itemId) => {
+    emit('removeItem', itemId);
+    localStorage.setItem()
+  };
+</script>
+
 <template>
     <div class="flex items-center gap-6 p-6 hover:bg-gray-50 transition-colors duration-200">
       <!-- Product Image with subtle shadow and rounded corners -->
@@ -51,22 +71,3 @@
       </div>
     </div>
   </template>
-    
-  <script setup>
-  defineProps({
-    item: {
-      type: Object,
-      required: true
-    }
-  });
-  
-  const emit = defineEmits(['updateQuantity', 'removeItem']);
-  
-  const updateQuantity = (itemId, newQuantity) => {
-    emit('updateQuantity', itemId, newQuantity);
-  };
-  
-  const removeItem = (itemId) => {
-    emit('removeItem', itemId);
-  };
-  </script>
