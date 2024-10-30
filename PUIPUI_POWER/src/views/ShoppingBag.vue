@@ -1,67 +1,3 @@
-<template>
-    <div class="min-h-screen bg-logo-cream py-8 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-4xl mx-auto">
-        <div class="flex items-center justify-between mb-8">
-          <h1 class="text-3xl font-bold text-gray-900">Shopping Bag</h1>
-          <router-link 
-            to="/" 
-            class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            Continue Shopping
-          </router-link>
-        </div>
-        
-        <div v-if="cartItems.length > 0" class="space-y-6">
-          <!-- Cart Items Container -->
-          <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-            <div class="divide-y divide-gray-200">
-              <ShoppingBagItem 
-                v-for="item in cartItems" 
-                :key="item.id"
-                :item="item"
-                @update-quantity="updateQuantity"
-                @remove-item="removeItem"
-              />
-            </div>
-          </div>
-  
-          <!-- Order Summary Card -->
-          <div class="bg-white rounded-xl shadow-sm p-6">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
-            <div class="space-y-3">
-              <div class="flex justify-between text-gray-600">
-                <span>Subtotal</span>
-                <span class="font-medium text-gray-900">฿{{ calculateTotal().toFixed(2) }}</span>
-              </div>
-              <div class="border-t border-gray-200 pt-3">
-                <button 
-                  @click="checkout"
-                  class="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 font-medium"
-                >
-                  Proceed to Checkout
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Empty Cart State -->
-        <div v-else class="text-center py-16 bg-white rounded-xl shadow-sm">
-          <div class="mb-6">
-            <span class="text-5xl">🛍️</span>
-          </div>
-          <p class="text-gray-600 text-lg mb-8">Your shopping bag is empty</p>
-          <router-link 
-            to="/" 
-            class="inline-block bg-gray-900 text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 font-medium"
-          >
-            Start Shopping
-          </router-link>
-        </div>
-      </div>
-    </div>
-  </template>
-
 <script setup>
 import { ref, onMounted } from 'vue';
 import ShoppingBagItem from '@/component/ShoppingBagItem.vue';
@@ -144,3 +80,67 @@ onMounted(() => {
   loadCartItems();
 });
 </script>
+
+<template>
+    <div class="min-h-screen bg-logo-cream py-8 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto">
+        <div class="flex items-center justify-between mb-8">
+          <h1 class="text-3xl font-bold text-gray-900">Shopping Bag</h1>
+          <router-link 
+            to="/" 
+            class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            Continue Shopping
+          </router-link>
+        </div>
+        
+        <div v-if="cartItems.length > 0" class="space-y-6">
+          <!-- Cart Items Container -->
+          <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+            <div class="divide-y divide-gray-200">
+              <ShoppingBagItem 
+                v-for="item in cartItems" 
+                :key="item.id"
+                :item="item"
+                @update-quantity="updateQuantity"
+                @remove-item="removeItem"
+              />
+            </div>
+          </div>
+  
+          <!-- Order Summary Card -->
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
+            <div class="space-y-3">
+              <div class="flex justify-between text-gray-600">
+                <span>Subtotal</span>
+                <span class="font-medium text-gray-900">฿{{ calculateTotal().toFixed(2) }}</span>
+              </div>
+              <div class="border-t border-gray-200 pt-3">
+                <button 
+                  @click="checkout"
+                  class="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 font-medium"
+                >
+                  Proceed to Checkout
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Empty Cart State -->
+        <div v-else class="text-center py-16 bg-white rounded-xl shadow-sm">
+          <div class="mb-6">
+            <span class="text-5xl">🛍️</span>
+          </div>
+          <p class="text-gray-600 text-lg mb-8">Your shopping bag is empty</p>
+          <router-link 
+            to="/" 
+            class="inline-block bg-gray-900 text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 font-medium"
+          >
+            Start Shopping
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </template>

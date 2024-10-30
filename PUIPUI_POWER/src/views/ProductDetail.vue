@@ -6,6 +6,8 @@ import router from '@/router';
 
 const product = ref<Product>();
 const id = router.currentRoute.value.params.id;
+const selectedSize = ref('');
+const quantity = ref(1);
 
 onMounted(() => {
   ProductService.getProductById(id)
@@ -14,10 +16,8 @@ onMounted(() => {
     }).catch((error) => {
       console.error("Error fetching product:", error);
     });
-});
 
-const selectedSize = ref('');
-const quantity = ref(1);
+});
 
 function increaseQuantity() {
   quantity.value++;
@@ -29,12 +29,41 @@ function decreaseQuantity() {
   }
 }
 
+// Updated buyNow function
 function buyNow() {
-  alert(`Buying ${quantity.value} of ${product.value.name}`);
+  addToCart(); // Call addToCart before redirecting
+  router.push("/shopping-bag");
 }
 
+// Updated addToBag function
 function addToBag() {
+  addToCart(); // Add product to the cart
   alert(`Added ${quantity.value} of ${product.value.name} to bag`);
+}
+
+// New helper function to add product to the cart
+function addToCart() {
+  const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+
+  // Check if the product already exists in the cart
+  const existingItem = cartItems.find((item: Product) => item.id === product.value._id);
+  
+  if (existingItem) {
+    // Update the quantity if it already exists
+    existingItem.quantity += quantity.value;
+  } else {
+    // Add new item to the cart
+    cartItems.push({
+      id: product.value._id,
+      name: product.value.name,
+      price: product.value.price,
+      quantity: quantity.value,
+      imgUrl: product.value.imgUrl,
+    });
+  }
+
+  // Save the updated cart to local storage
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
 }
 </script>
 

@@ -1,9 +1,9 @@
 <template>
     <div class="flex items-center gap-6 p-6 hover:bg-gray-50 transition-colors duration-200">
       <!-- Product Image with subtle shadow and rounded corners -->
-      <div class="relative w-24 h-24">
+      <div class="relative w-40 h-40">
         <img 
-          :src="item.image" 
+          :src="item.imgUrl" 
           :alt="item.name"
           class="w-full h-full object-cover rounded-lg shadow-sm"
         />
