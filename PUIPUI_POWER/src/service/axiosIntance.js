@@ -6,8 +6,8 @@ const axiosInstance = axios.create({
 });
 
 export default {
-    getProduct(page = 1) { 
-        return axiosInstance.get(`/data`, { params: { page } }); 
+    async getProduct(limit, page) {
+        return await axios.get(`http://localhost:8000/api/data/${limit}/${page}`);
     },
     getProductById(productId) {
         return axiosInstance.get(`/product/${productId}`);

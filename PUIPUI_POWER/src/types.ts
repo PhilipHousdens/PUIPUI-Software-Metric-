@@ -6,5 +6,6 @@ export interface Product {
     price: number; // Product price
     imgUrl: string; // URL of the product image
     stock: number; // Number of items in stock
+    totalPages: number;
 }
 

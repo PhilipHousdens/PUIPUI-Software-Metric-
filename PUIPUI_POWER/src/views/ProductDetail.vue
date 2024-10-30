@@ -39,7 +39,7 @@ function addToBag() {
 </script>
 
 <template>
-  <div v-if="product" class="product-page py-10 max-w-5xl mx-auto">
+  <div v-if="product" class="product-page my-10 max-w-5xl mx-auto">
     <div class="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
       <!-- Product Image -->
       <div class="flex-none w-full md:w-1/3">

@@ -15,16 +15,34 @@ app.use(oakCors({
 }));
 
 // server.js
-router.get("/api/data", async (ctx) => {
-    const data = await getPuiPui(); // Fetch data without pagination parameters
-    if (data.error) {
-        ctx.response.status = 500; // Set the response status to 500 if there's an error
-        ctx.response.body = { error: data.error }; // Return the error
-    } else {
-        ctx.response.body = data.products; // Set the response body to just the products array
-        ctx.response.type = "application/json"; // Set content type to JSON
-    }
+router.get("/api/data/:limit/:page", async (ctx) => {
+  console.log("Limit:", ctx.params.limit); // Log the limit
+  console.log("Page:", ctx.params.page);   // Log the page
+
+  const limit = parseInt(ctx.params.limit, 10); // Convert to integer
+  const page = parseInt(ctx.params.page, 10);   // Convert to integer
+
+  if (isNaN(limit) || isNaN(page)) { // Check for NaN values
+      ctx.response.status = 400;
+      ctx.response.body = { error: "Limit and page must be integers" };
+      return;
+  }
+
+  const data = await getPuiPui(limit, page);
+  if (data.error) {
+      ctx.response.status = 500;
+      ctx.response.body = { error: data.error };
+  } else {
+      // Include totalPages in the response body
+      ctx.response.body = {
+          products: data.products,
+          totalPages: data.totalPages,
+      };
+      ctx.response.type = "application/json";
+  }
 });
+
+
 
 
 

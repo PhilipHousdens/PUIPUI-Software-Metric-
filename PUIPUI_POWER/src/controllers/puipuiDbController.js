@@ -1,23 +1,40 @@
 import { puipuiDB } from "../api/database/db.js"; 
 
-
-async function getPuiPui(page = 1) {
-    const limit = 4; 
-    const skip = (page - 1) * limit; 
+async function getPuiPui(limit = 4, page = 1) {
+    const skip = (page - 1) * limit;
 
     try {
-        const allPuiPui = await puipuiDB.find().skip(skip).limit(limit).toArray(); 
-        const totalProducts = await puipuiDB.countDocuments(); 
-        
-        console.log("Retrieved data:", allPuiPui); 
+        // Fetch the products with pagination
+        const allPuiPui = await puipuiDB.aggregate([
+            { $unwind: "$products" }, // Flatten the products array
+            { $skip: skip }, // Skip to the correct page
+            { $limit: parseInt(limit) }, // Limit the number of products
+            { $replaceRoot: { newRoot: "$products" } } // Replace the root with each product document
+        ]).toArray();
+
+        // Count the total products available
+        const totalProducts = await puipuiDB.aggregate([
+            { $unwind: "$products" },
+            { $count: "count" }
+        ]).toArray();
+
+        console.log("Total Products Count:", totalProducts);
+
+        const totalCount = totalProducts[0] ? totalProducts[0].count : 0;
+        const totalPages = Math.ceil(totalCount / limit); // Calculate total pages
+
+        // Return the products and totalPages
         return {
             products: allPuiPui,
-            totalPages: Math.ceil(totalProducts / limit), 
-        }; 
+            totalPages, // Include total pages in the response
+        };
     } catch (error) {
-        return { error: error.message }; 
+        return { error: error.message };
     }
 }
+
+
+
 
 async function getPuiPuiById(productId) {
     try {
