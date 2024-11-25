@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import type { Product } from '@/types'; 
-import ProductService from '@/service/axiosIntance';
+import type { Product } from '@/ProductService'; 
+import ProductService from '@/service/productService';
 
 const props = defineProps(['updateCartCount']);
 const product = ref<Product>();
