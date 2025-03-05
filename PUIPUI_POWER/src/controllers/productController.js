@@ -1,6 +1,6 @@
 import { puipuiDB } from "../api/database/db.js"; 
 
-async function getPuiPui(limit = 4, page = 1) {
+async function getProduct(limit = 4, page = 1) {
     const skip = (page - 1) * limit;
 
     try {
@@ -36,7 +36,7 @@ async function getPuiPui(limit = 4, page = 1) {
 
 
 
-async function getPuiPuiById(productId) {
+async function getProductById(productId) {
     try {
         const product = await puipuiDB.findOne({ 
             "products._id": parseInt(productId)
@@ -56,4 +56,4 @@ async function getPuiPuiById(productId) {
     }
 }
 
-export { getPuiPui, getPuiPuiById };
+export { getProduct, getProductById };
