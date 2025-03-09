@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ProductCard from '@/component/ProductCard.vue';
+import ProductCard from '@/c/component/ProductCard.vue';
 import axiosInstance from '@/service/productService';
 import type { Product } from '@/ProductTypes'; 
-import { ref, computed, onMounted, Ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Pagination from '@/component/Pagination.vue';
 
 const products = ref<Product[]>(null)
