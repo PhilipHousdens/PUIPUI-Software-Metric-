@@ -1,0 +1,6 @@
+projectKey=PUI-PUISonar
+serverUrl=http://localhost:9000
+serverVersion=10.7.0.96327
+dashboardUrl=http://localhost:9000/dashboard?id=PUI-PUISonar
+ceTaskId=81e875e3-b661-4775-b891-cca3bc51489e
+ceTaskUrl=http://localhost:9000/api/ce/task?id=81e875e3-b661-4775-b891-cca3bc51489e

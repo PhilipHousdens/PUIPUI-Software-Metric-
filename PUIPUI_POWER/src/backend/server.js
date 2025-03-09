@@ -1,7 +1,7 @@
 // server.js
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
-import { getPuiPui, getPuiPuiById } from "../controllers/productController.js/index.js";
+import { getPuiPui, getPuiPuiById } from "../controllers/productController.js";
 
 const app = new Application();
 const router = new Router();
@@ -23,7 +23,7 @@ router.get("/api/data/:limit/:page", async (ctx) => {
   const limit = parseInt(ctx.params.limit, 10); // Convert to integer
   const page = parseInt(ctx.params.page, 10);   // Convert to integer
 
-  if (isNaN(limit) || isNaN(page)) { // Check for NaN values
+  if (isNaN(limit) || isNaN(page)) { // Check for NaN values 
       ctx.response.status = 400;
       ctx.response.body = { error: "Limit and page must be integers" };
       return;

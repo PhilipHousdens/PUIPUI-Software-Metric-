@@ -6,9 +6,11 @@ const props = defineProps<{
   currentPage: number;
 }>();
 
-const emit = defineEmits<{
-  (e: 'pageChange', page: number): void;
+const emit = defineEmits<{ 
+  pageChange: [page: number]; 
 }>();
+
+
 
 function goToPage(page: number) {
   if (page !== props.currentPage && page >= 1 && page <= props.totalPages) {
