@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import ProductCard from '@/c/component/ProductCard.vue';
-import axiosInstance from '@/service/productService';
-import type { Product } from '@/ProductTypes'; 
+import ProductCard from '@/component/ProductCard.vue';
+import axiosInstance from '@/service/productService.js';
+import type { Product } from '../ProductTypes'; 
 import { ref, onMounted } from 'vue';
 import Pagination from '@/component/Pagination.vue';
 
