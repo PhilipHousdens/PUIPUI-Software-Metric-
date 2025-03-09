@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import type { Product } from '@/ProductTypes'; 
-import ProductService from '@/service/productService';
+import type { Product } from '../ProductTypes'; 
+import ProductService from '../service/productService';
 
 const props = defineProps(['updateCartCount']);
 const product = ref<Product>();
@@ -71,7 +71,7 @@ function addToCart() {
   <div v-if="product" class="product-page my-10 max-w-5xl mx-auto">
     <div class="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
       <div class="flex-none w-full md:w-1/3">
-        <img :src="product.imgUrl" alt="Product Image" class="w-full h-auto object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none transition-transform duration-300 transform hover:scale-105"/>
+        <img :src="product.imgUrl" alt="display of product" class="w-full h-auto object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none transition-transform duration-300 transform hover:scale-105"/>
       </div>
       <div class="flex-grow p-6">
         <h1 class="text-4xl font-bold text-gray-800">{{ product.name }}</h1>
